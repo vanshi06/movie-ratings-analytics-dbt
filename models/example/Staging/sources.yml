@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: raw
+    database: NETFLIX_ANALYTICS_DB
+    schema: RAW
+
+    tables:
+      - name: RAW_MOVIES
+      - name: RAW_RATINGS
+      - name: RAW_TAGS
+      - name: RAW_GENOME_SCORES
+      - name: RAW_GENOME_TAGS
+      - name: RAW_LINKS

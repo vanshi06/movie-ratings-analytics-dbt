@@ -1,0 +1,122 @@
+version: 2
+
+models:
+
+  - name: dim_movies
+    description: Dimension table containing cleaned movie information.
+    columns:
+      - name: movieId
+        description: Unique identifier of the movie.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: movie_title
+        description: Cleaned movie title.
+        data_tests:
+          - not_null
+
+      - name: genre_array
+        description: Movie genres stored as an array.
+
+      - name: genres
+        description: Original genre string.
+
+
+  - name: dim_users
+    description: Dimension table containing unique users from ratings and tags.
+    columns:
+      - name: userId
+        description: Unique user identifier.
+        data_tests:
+          - not_null
+
+
+  - name: dim_genome_tags
+    description: Dimension table containing genome tag information.
+    columns:
+      - name: tagId
+        description: Genome tag identifier.
+        data_tests:
+          - not_null
+
+      - name: tag_name
+        description: Cleaned genome tag name.
+        data_tests:
+          - not_null
+
+
+  - name: fct_ratings
+    description: Fact table containing movie ratings.
+    columns:
+      - name: userId
+        description: User who gave the rating.
+        data_tests:
+          - not_null
+
+      - name: movieId
+        description: Movie being rated.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_movies')
+                field: movieId
+
+      - name: rating
+        description: Rating given by the user.
+        data_tests:
+          - not_null
+
+      - name: timestamp
+        description: Timestamp when the rating was recorded.
+
+
+  - name: fct_genome_scores
+    description: Fact table containing relevance scores between movies and genome tags.
+    columns:
+      - name: movieId
+        description: Movie identifier.
+        data_tests:
+          - not_null
+
+      - name: tagId
+        description: Genome tag identifier.
+        data_tests:
+          - not_null
+
+      - name: relevance_score
+        description: Relevance score of the tag for the movie.
+        data_tests:
+          - not_null
+
+
+  - name: movie_rating_summary
+    description: Movie-level summary of rating activity.
+    columns:
+      - name: movieId
+        description: Movie identifier.
+        data_tests:
+          - not_null
+
+      - name: title
+        description: Movie title.
+
+      - name: genres
+        description: Movie genres.
+
+      - name: total_ratings
+        description: Total number of ratings received.
+
+      - name: average_rating
+        description: Average rating for the movie.
+
+
+  - name: movie_ratings_mart
+    description: Final movie rating analytics model.
+    columns:
+      - name: movieId
+        description: Movie identifier.
+        data_tests:
+          - not_null
+          
