@@ -371,6 +371,22 @@ This macro demonstrates reusable Jinja logic for generating null-count validatio
 
 ---
 
+### **14.3 Orchestration Macro**
+
+The project includes a `load_raw_data` macro that automates Snowflake `COPY INTO` commands for loading CSV files from the Snowflake external stage into the RAW tables.
+
+The macro uses dbt's `run_query()` functionality to execute the COPY INTO commands for:
+
+* Movies
+* Ratings
+* Tags
+* Genome Scores
+* Genome Tags
+* Links
+
+This enables the raw data ingestion step to be executed directly through dbt Cloud orchestration.
+
+
 ## **15. Data Quality & Testing**
 
 Data quality is implemented using both built-in dbt tests and custom SQL tests.
@@ -461,7 +477,69 @@ The project follows a branch-based workflow where changes are committed and merg
 
 ---
 
-## **19. Snowflake Setup Script**
+## 19. dbt Cloud Orchestration & Automation
+
+The project uses dbt Cloud Deployment Jobs to automate the end-to-end data transformation workflow.
+
+### Automated Components
+
+* **dbt Macro:** `load_raw_data`
+* **Snowflake COPY INTO:** Automated loading of raw CSV files from the S3 stage into RAW tables
+* **dbt Seeds:** Automated using `dbt seed`
+* **dbt Models & Tests:** Automated using `dbt build`
+* **dbt Snapshots:** Automated using `dbt snapshot`
+
+### Raw Data Load Macro
+
+The `load_raw_data` macro uses dbt's `run_query()` functionality to execute Snowflake `COPY INTO` commands for the project datasets.
+
+The macro loads:
+
+* Movies
+* Ratings
+* Tags
+* Genome Scores
+* Genome Tags
+* Links
+
+This allows the S3-to-Snowflake RAW loading process to be executed directly from dbt Cloud.
+
+### Deployment Job
+
+A dbt Cloud Deployment Job named `NETFLIX_DBT_DAILY_ORCHESTRATION` was created to execute the complete workflow automatically.
+
+The job executes the following commands in sequence:
+
+```text
+dbt run-operation load_raw_data
+dbt seed
+dbt build
+dbt snapshot
+```
+
+This provides automated orchestration from raw data ingestion through transformation, testing, and snapshot processing.
+
+### Production Environment
+
+The deployment job runs using a dedicated Production/Deployment environment configured with:
+
+* Snowflake
+* Database: `NETFLIX_ANALYTICS_DB`
+* Warehouse: `COMPUTE_WH`
+* Role: `NETFLIX_ANALYTICS_ROLE`
+
+### Scheduled Execution
+
+The deployment job is configured to run daily at **11:30 AM IST** using the following UTC cron schedule:
+
+```text
+0 6 * * *
+```
+
+The complete deployment workflow was successfully executed and validated in dbt Cloud.
+
+
+## **20. Snowflake Setup Script**
 
 The Snowflake implementation is documented in:
 
@@ -485,7 +563,7 @@ The script covers:
 
 ---
 
-## **20. Repository Structure**
+## **21. Repository Structure**
 
 ```text
 ├── analyses/
@@ -546,7 +624,7 @@ The script covers:
 
 ---
 
-## **21. End-to-End Data Flow**
+## **22. End-to-End Data Flow**
 
 ```text
                     AMAZON S3
@@ -582,7 +660,7 @@ The script covers:
 
 ---
 
-## **22. Key Technical Skills Demonstrated**
+## **23. Key Technical Skills Demonstrated**
 
 This project demonstrates practical experience with:
 
@@ -607,7 +685,7 @@ This project demonstrates practical experience with:
 
 ---
 
-## **23. Project Outcome**
+## **24. Project Outcome**
 
 The project transforms raw movie datasets stored in Amazon S3 into structured and analytics-ready datasets in Snowflake.
 
@@ -633,7 +711,7 @@ The final result is a structured Snowflake and dbt project that demonstrates pra
 
 ---
 
-## **24. Author**
+## **25. Author**
 
 **Vanshi Taneja**
 
