@@ -571,7 +571,8 @@ The script covers:
 │
 ├── macros/
 │   ├── no_nulls_in_columns.sql
-│   └── rating_category.sql
+│   ├── rating_category.sql
+│   └── load_raw_data.sql
 │
 ├── models/
 │   ├── INCREMENTAL/
