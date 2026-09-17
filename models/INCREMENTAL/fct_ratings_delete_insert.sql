@@ -1,6 +1,6 @@
 {{ config(
     materialized='incremental',
-    unique_key=['userId', 'movieId', 'timestamp'],
+    unique_key=['userId', 'movieId',],
     incremental_strategy='delete+insert'
 ) }}
 
@@ -13,7 +13,7 @@ FROM {{ ref('stg_ratings') }}
 
 {% if is_incremental() %}
 
-WHERE timestamp >= (
+WHERE timestamp >(
     SELECT MAX(timestamp)
     FROM {{ this }}
 )

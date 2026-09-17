@@ -2,7 +2,7 @@
     materialized='incremental',
     incremental_strategy='microbatch',
     event_time='event_timestamp',
-    begin='2020-01-01',
+    begin='2006-01-01',
     batch_size='day'
 ) }}
 

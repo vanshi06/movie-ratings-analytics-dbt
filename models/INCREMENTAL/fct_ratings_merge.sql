@@ -1,6 +1,6 @@
 {{ config(
     materialized='incremental',
-    unique_key=['userId', 'movieId', 'timestamp'],
+    unique_key=['userId', 'movieId'],
     incremental_strategy='merge'
 ) }}
 
