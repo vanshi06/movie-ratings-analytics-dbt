@@ -736,7 +736,7 @@ The pipeline's ingestion, transformation, orchestration, and testing were valida
 
 **Incremental strategy comparison** — all four strategies (append, merge, delete+insert, microbatch) tested against the same data, producing different, individually explainable row counts that demonstrate each strategy's actual behavior.
 
-![Incremental strategy comparison](screenshots/sf/10_incremental_comparison.jpeg)
+![Incremental comparison](screenshots/sf/10_incremental_comparison.jpeg)
 
 **Active snapshot records** — `snap_tags` showing currently valid rows via `DBT_VALID_TO IS NULL`, proving the SCD Type 2 change-tracking snapshot works correctly.
 
