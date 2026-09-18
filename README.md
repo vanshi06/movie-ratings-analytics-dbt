@@ -714,7 +714,7 @@ The final result is a structured Snowflake and dbt project that demonstrates pra
 
 # **25. Screenshots**
 
-[#25-screenshots]
+
 
 The pipeline's ingestion, transformation, orchestration, and testing were validated end-to-end across Snowflake, dbt Cloud, and AWS. Highlights below; the full validation set is in the collapsible section.
 
