@@ -712,7 +712,67 @@ The final result is a structured Snowflake and dbt project that demonstrates pra
 
 ---
 
-## **25. Author**
+# **25. Screenshots**
+
+[#25-screenshots](#25-screenshots)
+
+The pipeline's ingestion, transformation, orchestration, and testing were validated end-to-end across Snowflake, dbt Cloud, and AWS. Highlights below; the full validation set is in the collapsible section.
+
+### dbt — Lineage & Orchestration
+
+**Full project lineage graph** — every source, staging model, dimension, fact, snapshot, seed, and mart, fully connected. This is the clearest single view of the entire project's architecture.
+
+![Full lineage graph](screenshots/dbt/01_full_lineage_graph.jpeg)
+
+**Daily orchestration job** — `NETFLIX_DBT_DAILY_ORCHESTRATION` running on schedule with a 100% success rate across all recent runs, including automated scheduled triggers at 11:30 AM IST.
+
+![Daily orchestration job](screenshots/dbt/02_daily_orchestration_job.jpeg)
+
+**`dbt build` summary** — models and tests executing together, with pass/fail counts confirming the pipeline runs cleanly end to end.
+
+![dbt build summary](screenshots/dbt/03_dbt_build_summary.jpeg)
+
+### Snowflake — Incremental Strategies & Snapshots
+
+**Incremental strategy comparison** — all four strategies (append, merge, delete+insert, microbatch) tested against the same data, producing different, individually explainable row counts that demonstrate each strategy's actual behavior.
+
+![Incremental strategy comparison](screenshots/sf/10_incremental_comparison.jpeg)
+
+**Active snapshot records** — `snap_tags` showing currently valid rows via `DBT_VALID_TO IS NULL`, proving the SCD Type 2 change-tracking snapshot works correctly.
+
+![Active snapshot records](screenshots/sf/07_snapshot_active_records.jpeg)
+
+### AWS — Cross-Account Trust
+
+**IAM role trust relationship** — the `NETFLIX-ADMIN` role's trust policy, scoped to Snowflake's IAM user via `sts:AssumeRole` with an external ID condition, rather than an open trust relationship.
+
+![IAM role trust relationship](screenshots/aws/02_iam_role_trust_relationship.jpeg)
+
+<details>
+<summary><strong>Click to see additional validation screenshots</strong></summary>
+
+#### Snowflake — Ingestion & Data Layers
+![RAW layer row counts](screenshots/sf/01_raw_row_counts.jpeg)
+![Schema creation](screenshots/sf/02_schema_creation.jpeg)
+![S3 stage file listing](screenshots/sf/03_s3_stage_list.jpeg)
+![Seed row count](screenshots/sf/04_seed_row_count.jpeg)
+![Seed table structure](screenshots/sf/05_seed_table_structure.jpeg)
+![Snapshot row count](screenshots/sf/06_snapshot_row_count.jpeg)
+![Macro validation](screenshots/sf/08_macro_validation.jpeg)
+![Final mart sample](screenshots/sf/09_final_mart_sample.jpeg)
+
+#### dbt — Test Results
+![Detailed build/test results](screenshots/dbt/04_dbt_build_detailed_results.jpeg)
+
+#### AWS — IAM & S3
+![IAM user (sf-netflix-user)](screenshots/aws/01_iam_user_sf_netflix.jpeg)
+![IAM role summary (NETFLIX-ADMIN)](screenshots/aws/03_iam_role_summary.jpeg)
+![S3 bucket contents (netflixdatasetnew)](screenshots/aws/04_s3_bucket_contents.jpeg)
+
+</details>
+
+
+## **26. Author**
 
 **Vanshi Taneja**
 
